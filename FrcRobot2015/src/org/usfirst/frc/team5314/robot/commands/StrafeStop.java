@@ -7,14 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ArmAutoSpin extends Command {
-	private double speed;
+public class StrafeStop extends Command {
 
-    public ArmAutoSpin(double inputSpeed) {
+    public StrafeStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.arms);
-    	this.speed = inputSpeed;
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +21,7 @@ public class ArmAutoSpin extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.arms.autoSpin(this.speed, 0);
+    	Robot.chassis.AutoStrafe(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

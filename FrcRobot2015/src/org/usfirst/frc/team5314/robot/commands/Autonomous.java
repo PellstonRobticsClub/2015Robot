@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class Autonomous extends CommandGroup {
     
-    public  Autonomous() {
+    public  Autonomous(int mode) {
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -25,11 +25,40 @@ public class Autonomous extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new ArmAutoSpin(), 1);
-    	addSequential(new LiftUp(), 1);
-    	addSequential(new AutoDriveCommand(-.5, .5), .7);
-    	addSequential(new LiftDoNothing(), 1);
-    	addSequential(new AutoDriveCommand(.75, .76), 3);
+    	if (mode ==1 ){
+    		addSequential(new AutoStrafe(1), .9);
+    		addSequential(new StrafeStop(),.1);
+    		addParallel(new ArmAutoSpin(1), 2);
+    		addSequential(new AutoDriveCommand(.6, .6),2);
+    		addParallel(new ArmAutoSpin(1), .7);
+    		addSequential(new AutoDriveCommand(-.5, .5), .7);
+    		addParallel(new ArmAutoSpin(1), .5);
+    		addSequential(new LiftDoNothing(), .5);
+    		addParallel(new ArmAutoSpin(1), 2);
+    		addSequential(new AutoDriveCommand(.8, .8), 2);
+    	}   
     	
+    	if (mode == 2){
+    		addSequential(new AutoStrafe(-1), .9);
+    		addSequential(new StrafeStop(),.1);
+    		addParallel(new ArmAutoSpin(1), 2);
+    		addSequential(new AutoDriveCommand(.6, .6),2);
+    		addParallel(new ArmAutoSpin(1), .7);
+    		addSequential(new AutoDriveCommand(.5, -.5), .7);
+    		addParallel(new ArmAutoSpin(1), .5);
+    		addSequential(new LiftDoNothing(), .5);
+    		addParallel(new ArmAutoSpin(1), 2);
+    		addSequential(new AutoDriveCommand(.8, .8), 2);
+    	}
+    	if (mode == 3){
+    		addSequential(new AutoStrafe(1), 2.5);
+    		addSequential(new StrafeStop(),.1);
+    		addSequential(new AutoDriveCommand(-.5, .5), .9);
+    		addSequential(new LiftDoNothing(), .5);
+    		addSequential(new AutoDriveCommand(.8, .8), 1);
+    	}
+    	if (mode == 4){
+    		addSequential(new AutoDriveCommand(.8 , .8), 1);
+    	}
     }
 }

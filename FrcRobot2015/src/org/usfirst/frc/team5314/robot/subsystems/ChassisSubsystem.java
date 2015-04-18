@@ -46,6 +46,9 @@ public class ChassisSubsystem extends Subsystem {
     	robot.tankDrive(-y, -x);
     
     }
+    public void AutoStrafe(double speed){
+    	strafe.set(speed);
+    }
     
     public void Stop(){
     	robot.drive(0, 0);

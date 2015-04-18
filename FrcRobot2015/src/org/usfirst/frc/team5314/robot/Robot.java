@@ -3,9 +3,12 @@ package org.usfirst.frc.team5314.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5314.robot.commands.Autonomous;
 import org.usfirst.frc.team5314.robot.subsystems.ArmSubsystem;
@@ -25,9 +28,11 @@ public class Robot extends IterativeRobot {
 	public static final LiftSubsystem lift = new LiftSubsystem();
 	public static final ArmSubsystem arms = new ArmSubsystem();
 	public static OI oi;
+	
 
     Command autonomousCommand;
     CameraServer server;
+    SendableChooser autoChooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -36,11 +41,18 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         // instantiate the command used for the autonomous period
-        autonomousCommand = new Autonomous();
+        
         server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
         server.startAutomaticCapture("cam0");
+        autoChooser = new SendableChooser();
+        autoChooser.addDefault("move right", 1);
+        autoChooser.addObject("move Left", 2);
+        autoChooser.addObject("petoskey", 3);
+        autoChooser.addObject("straight 1 sec", 4);
+        SmartDashboard.putData("Autonomous Choice", autoChooser);
+        
     }
 	
 	public void disabledPeriodic() {
@@ -48,6 +60,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
+    	autonomousCommand = new Autonomous((int) autoChooser.getSelected());
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }

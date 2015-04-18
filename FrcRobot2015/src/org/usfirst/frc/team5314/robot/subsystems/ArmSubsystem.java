@@ -24,7 +24,11 @@ public class ArmSubsystem extends Subsystem {
     }
     
     public void spin(Joystick Stick){
-    	armMotors.arcadeDrive(Stick.getY()*.8, Stick.getX());
+    	double speedMultiplier = .8;
+    	if(Stick.getRawButton(6)){
+    		speedMultiplier =.5;
+    	}
+    	armMotors.arcadeDrive(Stick.getY()*.8, Stick.getRawAxis(4)*.8);
     	//leftMotor.set(Math.abs(Stick.getY())> .25 ? Stick.getY() : 0);
     	//rightMotor.set(-(Math.abs(Stick.getRawAxis(5))>.25 ? Stick.getRawAxis(5) : 0));
     }

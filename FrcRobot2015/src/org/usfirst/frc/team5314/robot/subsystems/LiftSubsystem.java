@@ -39,5 +39,8 @@ public class LiftSubsystem extends Subsystem {
     	SmartDashboard.putBoolean("UP Sensor", upperSensor.get());
     	SmartDashboard.putBoolean("down Sensor", lowerSensor.get());
     }
+    public boolean isLiftDown(){
+    	return !lowerSensor.get();
+    }
 }
 
